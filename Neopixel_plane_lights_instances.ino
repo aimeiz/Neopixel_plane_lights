@@ -19,6 +19,7 @@
 // On a Trinket or Gemma we suggest changing this to 1:
 #define LED_PIN_LEFT     11
 #define LED_PIN_RIGHT	 12
+#define LED_PIN_BACK	 13
 #define LED_COUNT_LEFT 18
 #define LED_COUNT_RIGHT 18
 
@@ -41,13 +42,15 @@ const LedsNumbers blinkLeftUp = { 13, 13 };
 const LedsNumbers blinkRightUp = { 13, 13 };
 const LedsNumbers positionLeftUp = { 14, 17 };
 const LedsNumbers positionRightUp = { 14, 17 };
+const LedsNumbers positionLeftBack = { 0, 0 };
+const LedsNumbers positionCenterBack = { 1, 1 };
+const LedsNumbers positionRightBack = { 2, 2 };
 
 
 // How many NeoPixels are attached to the Arduino?
 #define LED_COUNT_LEFT  18
 #define LED_COUNT_RIGHT  18
-//#define LED_COUNT  45
-//#define LED_COUNT  8
+#define LED_COUNT_BACK  3
 
 // NeoPixel brightness, 0 (min) to 255 (max)
 //#define BRIGHTNESS 50 // Set BRIGHTNESS to about 1/5 (max = 255)
@@ -60,6 +63,7 @@ const LedsNumbers positionRightUp = { 14, 17 };
 //For WS2811
 Adafruit_NeoPixel stripLeft(LED_COUNT_LEFT, LED_PIN_LEFT, NEO_BRG + NEO_KHZ800);
 Adafruit_NeoPixel stripRight(LED_COUNT_RIGHT, LED_PIN_RIGHT, NEO_BRG + NEO_KHZ800);
+Adafruit_NeoPixel stripBack(LED_COUNT_BACK, LED_PIN_BACK, NEO_BRG + NEO_KHZ800);
 // Argument 1 = Number of pixels in NeoPixel strip
 // Argument 2 = Arduino pin number (most are valid)
 // Argument 3 = Pixel type flags, add together as needed:
@@ -132,11 +136,6 @@ static void setLedRGB(Adafruit_NeoPixel& strip, uint8_t led, uint8_t r, uint8_t 
 	strip.setPixelColor(led, strip.Color(r, g, b));
 }
 
-//void setLedWhite(int led, uint8_t w)
-//{
-//	strip.setPixelColor(led, strip.Color(0, 0, 0, w));
-//	strip.show();
-//}
 
 void clearAllLeds()
 {
@@ -144,6 +143,8 @@ void clearAllLeds()
 	stripLeft.show();
 	stripRight.clear();
 	stripRight.show();
+	stripBack.clear();
+	stripBack.show();
 }
 
 void frontLampsOn()
@@ -161,47 +162,64 @@ void positionLampsOn()
 {
 	// front lamps
 	for (uint8_t i = positionLeftDown.startLed; i <= positionLeftDown.endLed; i++)
-		setLedRGB(stripLeft, i, 255, 0, 0);   // front left red
+		setLedColor(stripLeft, i, COLOR_RED);
 	for (uint8_t i = positionRightDown.startLed; i <= positionRightDown.endLed; i++)
-		setLedRGB(stripRight, i, 0, 255, 0);   // front Right green
+		setLedColor(stripRight, i, COLOR_GREEN);
 	for (uint8_t i = positionLeftUp.startLed; i <= positionLeftUp.endLed; i++)
-		setLedRGB(stripLeft, i, 255, 0, 0);   // front left red
+		setLedColor(stripLeft, i, COLOR_RED);
 	for (uint8_t i = positionRightUp.startLed; i <= positionRightUp.endLed; i++)
-		setLedRGB(stripRight, i, 0, 255, 0);   // front Right green
+		setLedColor(stripRight, i, COLOR_GREEN);
+	// back lamps
+	setLedColor(stripBack, positionLeftBack.startLed, COLOR_RED);       // left back red
+	setLedColor(stripBack, positionCenterBack.startLed, COLOR_BLUE);  // center back blue
+	setLedColor(stripBack, positionRightBack.startLed, COLOR_GREEN);    // right back
 	stripLeft.show();
 	stripRight.show();
+	stripBack.show();
 }
 
 void blinkingLamps() {
 	//Blinking lamps
 	for (uint8_t i = blinkLeftDown.startLed; i <= blinkLeftDown.endLed; i++)
-		setLedRGB(stripLeft, i, 0, 0, 255);   // rear upper white
+		setLedColor(stripLeft, i, COLOR_BLUE);
 	for (uint8_t i = blinkRightDown.startLed; i <= blinkRightDown.endLed; i++)
-		setLedRGB(stripRight, i, 0, 0, 255);   // rear upper white
+		setLedColor(stripRight, i, COLOR_BLUE);
+	for (uint8_t i = positionCenterBack.startLed; i <= positionCenterBack.endLed; i++)
+		setLedColor(stripBack, positionCenterBack.startLed, COLOR_BLUE);
 	stripLeft.show();
 	stripRight.show();
+	stripBack.show();
 	delay(100);
 	for (uint8_t i = blinkLeftDown.startLed; i <= blinkLeftDown.endLed; i++)
-		setLedRGB(stripLeft, i, 0, 0, 0);   // rear upper white
+		setLedColor(stripLeft, i, COLOR_BLACK);
 	for (uint8_t i = blinkRightDown.startLed; i <= blinkRightDown.endLed; i++)
-		setLedRGB(stripRight, i, 0, 0, 0);   // rear upper white
+		setLedColor(stripRight, i, COLOR_BLACK); // right upper black (Off)
+	for (uint8_t i = positionCenterBack.startLed; i <= positionCenterBack.endLed; i++)
+		setLedColor(stripBack, positionCenterBack.startLed, COLOR_BLACK); //back center off
 	stripLeft.show();
 	stripRight.show();
+	stripBack.show();
 	delay(1000);
 
 	for (uint8_t i = blinkLeftUp.startLed; i <= blinkLeftUp.endLed; i++)
-		setLedRGB(stripLeft, i, 255, 255, 255);   // Down blink white
+		setLedColor(stripLeft, i, COLOR_WHITE);  // blinkLeft Up white
 	for (uint8_t i = blinkRightUp.startLed; i <= blinkRightUp.endLed; i++)
-		setLedRGB(stripRight, i, 255, 255, 255);   // Down blink white
+		setLedColor(stripRight, i, COLOR_WHITE);  // blinkRight Up white
+	for (uint8_t i = positionCenterBack.startLed; i <= positionCenterBack.endLed; i++)
+		setLedColor(stripBack, positionCenterBack.startLed, COLOR_WHITE);   // blinkRight Up white
 	stripLeft.show();
 	stripRight.show();
+	stripBack.show();
 	delay(100);
 	for (uint8_t i = blinkLeftUp.startLed; i <= blinkLeftUp.endLed; i++)
-		setLedRGB(stripLeft, i, 0, 0, 0);   // Down blink off
+		setLedColor(stripLeft, i, COLOR_BLACK); // blink Left Up off
 	for (uint8_t i = blinkRightUp.startLed; i <= blinkRightUp.endLed; i++)
-		setLedRGB(stripRight, i, 0, 0, 0);   // Down blink off
+		setLedColor(stripRight, i, COLOR_BLACK); // blink Right Up off
+	for (uint8_t i = positionCenterBack.startLed; i <= positionCenterBack.endLed; i++)
+		setLedColor(stripBack, positionCenterBack.startLed, COLOR_BLACK);
 	stripLeft.show();
 	stripRight.show();
+	stripBack.show();
 	delay(1000);
 }
 
@@ -209,29 +227,40 @@ void snakeShow()
 {
 
 	for (uint8_t i = positionLeftUp.endLed; i >= positionLeftUp.startLed; i--) {
-		setLedRGB(stripLeft, i, 0, 0, 255);   // positio left up blue
-		setLedRGB(stripRight, i, 0, 0, 255);   // positio right up blue
+		setLedColor(stripLeft, i, COLOR_BLUE);	 // positio left up blue
+		setLedColor(stripRight, i, COLOR_BLUE);	 // positio right up blue
+		if (i == positionLeftUp.endLed) {
+			setLedColor(stripBack, positionRightBack.startLed, COLOR_BLUE); // right back blue
+			setLedColor(stripBack, positionLeftBack.startLed, COLOR_BLUE); // right back blue
+			stripBack.show();
+		}
 		stripLeft.show();
 		stripRight.show();
+		stripBack.show();
 		delay(100);
 	}
 	for (uint8_t i = positionLeftDown.endLed; i >= positionLeftDown.startLed; i--) {
-		setLedRGB(stripLeft, i, 0, 0, 255);   // position left down blue
-		setLedRGB(stripRight, i, 0, 0, 255);   // front right down blue
+		setLedColor(stripLeft, i, COLOR_BLUE);	 // position left down blue
+		setLedColor(stripRight, i, COLOR_BLUE);	 // front right down blue
 		stripLeft.show();
 		stripRight.show();
 		delay(100);
 	}
 	for (uint8_t i = positionLeftDown.startLed; i <= positionLeftDown.endLed; i++) {
-		setLedRGB(stripLeft, i, 255, 0, 0);   // position left down red
-		setLedRGB(stripRight, i, 0, 255, 0);   // position right down green
+		setLedColor(stripLeft, i, COLOR_RED);   // position left down red
+		if (i == positionLeftDown.startLed) {
+			setLedColor(stripBack, positionLeftBack.startLed, COLOR_RED); // left back red
+			setLedColor(stripBack, positionRightBack.startLed, COLOR_GREEN); // right back green
+			stripBack.show();
+		}
 		stripLeft.show();
 		stripRight.show();
 		delay(100);
 	}
 	for (uint8_t i = positionLeftUp.startLed; i <= positionLeftUp.endLed; i++) {
-		setLedRGB(stripLeft, i, 255, 0, 0);   // front left up red
-		setLedRGB(stripRight, i, 0, 255, 0);   // front right up green
+		setLedColor(stripLeft, i, COLOR_RED);   // front left up red
+		setLedColor(stripRight, i, COLOR_GREEN);   // front right up green
+		setLedColor(stripRight, i, COLOR_GREEN);   // position right down green
 		stripLeft.show();
 		stripRight.show();
 		delay(100);
@@ -254,6 +283,10 @@ void setup()
 	stripRight.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
 	stripRight.show();            // Turn OFF all pixels ASAP
 	stripRight.setBrightness(BRIGHTNESS);
+
+	stripBack.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+	stripBack.show();            // Turn OFF all pixels ASAP
+	stripBack.setBrightness(BRIGHTNESS);
 }
 
 // Add the main program code into the continuous loop() function
