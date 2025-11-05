@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Neopixel_plane_lights_instances", "Neopixel_plane_lights_instances.vcxproj", "{54F82D5A-8E60-A34A-1113-AA21C446A1C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Debug|ARM.ActiveCfg = Debug|ARM
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Debug|ARM.Build.0 = Debug|ARM
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Debug|ARM.Deploy.0 = Debug|ARM
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Debug|ARM64.Build.0 = Debug|ARM64
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Release|ARM.ActiveCfg = Release|ARM
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Release|ARM.Build.0 = Release|ARM
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Release|ARM.Deploy.0 = Release|ARM
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Release|ARM64.ActiveCfg = Release|ARM64
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Release|ARM64.Build.0 = Release|ARM64
+		{54F82D5A-8E60-A34A-1113-AA21C446A1C2}.Release|ARM64.Deploy.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9F4DAD0-1336-48AA-9259-1A4B87FBCD07}
+	EndGlobalSection
+EndGlobal
